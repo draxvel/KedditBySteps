@@ -1,4 +1,4 @@
-package com.tkachuk.kedditbysteps
+package com.tkachuk.kedditbysteps.features
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
@@ -6,11 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import com.tkachuk.kedditbysteps.R
 import com.tkachuk.kedditbysteps.commons.adapter.NewsAdapter
 import com.tkachuk.kedditbysteps.commons.RxBaseFragment
 import com.tkachuk.kedditbysteps.commons.inflate
-import com.tkachuk.kedditbysteps.features.NewsManager
 import kotlinx.android.synthetic.main.fragment_news.*
+import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 
 class NewsFragment : RxBaseFragment() {
@@ -41,6 +42,7 @@ class NewsFragment : RxBaseFragment() {
     private fun requestNews() {
         val subscription = newsManager.getNews()
                 .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         { retrievedNews ->
                             (news_list.adapter as NewsAdapter).addNews(retrievedNews)

@@ -10,8 +10,7 @@ import com.tkachuk.kedditbysteps.R
 import com.tkachuk.kedditbysteps.commons.InfiniteScrollListener
 import com.tkachuk.kedditbysteps.commons.RedditNews
 import com.tkachuk.kedditbysteps.commons.adapter.NewsAdapter
-import com.tkachuk.kedditbysteps.commons.RxBaseFragment
-import com.tkachuk.kedditbysteps.commons.inflate
+import com.tkachuk.kedditbysteps.funextension.inflate
 import kotlinx.android.synthetic.main.fragment_news.*
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers

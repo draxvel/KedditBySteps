@@ -1,4 +1,4 @@
-package com.tkachuk.kedditbysteps.commons
+package com.tkachuk.kedditbysteps.funextension
 
 import android.text.TextUtils
 import android.view.LayoutInflater

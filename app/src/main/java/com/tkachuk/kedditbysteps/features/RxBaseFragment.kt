@@ -1,4 +1,4 @@
-package com.tkachuk.kedditbysteps.commons
+package com.tkachuk.kedditbysteps.features
 
 import android.support.v4.app.Fragment
 import rx.subscriptions.CompositeSubscription

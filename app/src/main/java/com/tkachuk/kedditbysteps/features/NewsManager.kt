@@ -1,20 +1,28 @@
 package com.tkachuk.kedditbysteps.features
 
+import com.tkachuk.kedditbysteps.api.RestApi
 import com.tkachuk.kedditbysteps.commons.RedditNewsItem
 import rx.Observable
 
-class NewsManager {
-    fun getNews(): Observable<List<RedditNewsItem>> {
-        return Observable.create { subscriber ->
-            val news = mutableListOf<RedditNewsItem>()
+class NewsManager(private val api: RestApi = RestApi()) {
 
-            for (i in 1..10) {
-                news.add(RedditNewsItem("author$i", "title$i",
-                        i,
-                        32324234234,
-                        "https://picsum.photos/200/200?image=$i", "url$i"))
+    fun getNews(limit: String = "10"): Observable<List<RedditNewsItem>> {
+        return Observable.create {
+            subscriber ->
+            val callResponse = api.getNews("", limit)
+            val response = callResponse.execute()
+
+            if (response.isSuccessful) {
+                val news = response.body().data.children.map {
+                    val item = it.data
+                    RedditNewsItem(item.author, item.title, item.num_comments,
+                            item.created, item.thumbnail, item.url)
+                }
+                subscriber.onNext(news)
+                subscriber.onCompleted()
+            } else {
+                subscriber.onError(Throwable(response.message()))
             }
-            subscriber.onNext(news)
         }
     }
 }

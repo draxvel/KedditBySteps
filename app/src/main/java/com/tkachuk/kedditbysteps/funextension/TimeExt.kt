@@ -1,4 +1,4 @@
-package com.tkachuk.kedditbysteps
+package com.tkachuk.kedditbysteps.funextension
 
 import java.text.DateFormat
 import java.util.*

@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import com.tkachuk.kedditbysteps.R
 import com.tkachuk.kedditbysteps.commons.adapter.util.ViewType
 import com.tkachuk.kedditbysteps.commons.adapter.util.ViewTypeDelegateAdapter
-import com.tkachuk.kedditbysteps.commons.inflate
+import com.tkachuk.kedditbysteps.funextension.inflate
 
 class LoadingDelegateAdapter: ViewTypeDelegateAdapter {
     override fun onCreateViewHolder(parent: ViewGroup) = TurnsViewHolder(parent)

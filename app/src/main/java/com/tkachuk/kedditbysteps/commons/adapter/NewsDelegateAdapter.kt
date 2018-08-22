@@ -6,9 +6,9 @@ import com.tkachuk.kedditbysteps.R
 import com.tkachuk.kedditbysteps.commons.RedditNewsItem
 import com.tkachuk.kedditbysteps.commons.adapter.util.ViewType
 import com.tkachuk.kedditbysteps.commons.adapter.util.ViewTypeDelegateAdapter
-import com.tkachuk.kedditbysteps.commons.inflate
-import com.tkachuk.kedditbysteps.commons.loadImg
-import com.tkachuk.kedditbysteps.getTime
+import com.tkachuk.kedditbysteps.funextension.inflate
+import com.tkachuk.kedditbysteps.funextension.loadImg
+import com.tkachuk.kedditbysteps.funextension.getTime
 import kotlinx.android.synthetic.main.news_item.view.*
 
 class NewsDelegateAdapter: ViewTypeDelegateAdapter {

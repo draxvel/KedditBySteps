@@ -1,17 +1,25 @@
 package com.tkachuk.kedditbysteps
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.tkachuk.kedditbysteps.commons.adapter.NewsAdapter
-import com.tkachuk.kedditbysteps.commons.RedditNewsItem
+import com.tkachuk.kedditbysteps.commons.RxBaseFragment
 import com.tkachuk.kedditbysteps.commons.inflate
+import com.tkachuk.kedditbysteps.features.NewsManager
 import kotlinx.android.synthetic.main.fragment_news.*
+import rx.schedulers.Schedulers
 
-class NewsFragment: Fragment() {
+class NewsFragment : RxBaseFragment() {
+
+    private val newsManager by lazy { NewsManager() }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return container?.inflate(R.layout.fragment_news)
+    }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -19,26 +27,28 @@ class NewsFragment: Fragment() {
         news_list.layoutManager = LinearLayoutManager(context)
         initAdapter()
 
-        if(savedInstanceState == null){
-            val news = mutableListOf<RedditNewsItem>()
-            for(i in 1..10){
-                news.add(RedditNewsItem("author$i", "title$i",
-                        i,
-                        32324234234,
-                            "https://picsum.photos/200/200?image=$i", "url$i"))
-            }
-            (news_list.adapter as NewsAdapter).addNews(news)
+        if (savedInstanceState == null) {
+            requestNews()
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = container?.inflate(R.layout.fragment_news)
-        return view
-    }
-
-    private fun initAdapter(){
-        if(news_list.adapter == null){
+    private fun initAdapter() {
+        if (news_list.adapter == null) {
             news_list.adapter = NewsAdapter()
         }
+    }
+
+    private fun requestNews() {
+        val subscription = newsManager.getNews()
+                .subscribeOn(Schedulers.io())
+                .subscribe(
+                        { retrievedNews ->
+                            (news_list.adapter as NewsAdapter).addNews(retrievedNews)
+                        },
+                        { e ->
+                            Toast.makeText(this@NewsFragment.context, e.localizedMessage, Toast.LENGTH_SHORT).show()
+                        }
+                )
+        subscriptions.add(subscription) // add the subscription
     }
 }

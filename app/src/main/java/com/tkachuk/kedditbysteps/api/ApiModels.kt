@@ -1,5 +1,7 @@
 package com.tkachuk.kedditbysteps.api
 
+class RedditNewsResponse(val data: RedditDataResponse)
+
 class RedditDataResponse(
         val children: List<RedditChildrenResponse>,
         val after: String?,
@@ -14,5 +16,4 @@ class RedditNewsDataResponse(
         val num_comments: Int,
         val created: Long,
         val thumbnail: String,
-        val url: String
-)
+        val url: String)
